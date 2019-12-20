@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+	<!-- 扫描器 -->
+
+	<context:property-placeholder
+		location="classpath:cms.properties" />
+
+	<!-- todo -->
+	<context:component-scan
+		base-package="com.gonghanxun.cms.controller"></context:component-scan>
+		<context:component-scan
+		base-package="com.gonghanxun.demo"></context:component-scan>
+	<!-- 视图解析图 -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<!-- 配置前缀 -->
+		<property name="prefix" value="/WEB-INF/view/"></property>
+		<!-- 配置后缀 -->
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+
+	 <mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<mvc:exclude-mapping path="/user/login" />
+			<mvc:exclude-mapping path="/user/register" />
+			<mvc:exclude-mapping path="/user/checkname" />
+			<mvc:exclude-mapping path="/resource/**" />
+			<mvc:exclude-mapping path="/index/**" />
+			<mvc:exclude-mapping path="/channel/**" />
+			<mvc:exclude-mapping path="/article/**"/>
+			<mvc:exclude-mapping path="/" />
+			<mvc:exclude-mapping path="/pic/**" />
+			<mvc:exclude-mapping path="/file/**" />
+			<bean class="com.gonghanxun.cms.web.CmsInterceptor"></bean>
+		</mvc:interceptor>
+
+	<!-- 	<mvc:interceptor>
+			匹配的是url路径， 如果不配置或/**,将拦截所有的Controller
+			<mvc:mapping path="/demo/**" />
+			/register 和 /login 不需要拦截
+			<mvc:exclude-mapping path="/demo/register" />
+			<mvc:exclude-mapping path="/demo/login" />
+			<bean class="com.e1708.demo.TokenInterceptor"></bean>
+		</mvc:interceptor> -->
+
+	</mvc:interceptors>
+
+
+	<!-- 内容转换，防止乱码 -->
+	<!-- <mvc:annotation-driven>
+		<mvc:message-converters
+			register-defaults="true">
+			<bean
+				class="org.springframework.http.converter.StringHttpMessageConverter">
+				<property name="supportedMediaTypes"
+					value="text/plain;charset=UTF-8" />
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven> -->
+
+
+
+
+
+
+	<!-- 配置权限的拦截器 -->
+	<!-- <mvc:interceptors> <mvc:interceptor> <mvc:mapping path="/**"/> <mvc:exclude-mapping 
+		path="/user/login"/> <mvc:exclude-mapping path="/user/register"/> <mvc:exclude-mapping 
+		path="/"/> <mvc:exclude-mapping path="/index"/> <mvc:exclude-mapping path="/pic/**"/> 
+		<mvc:exclude-mapping path="/resource/**"/> <mvc:exclude-mapping path="/article/showdetail"/> 
+		<bean class="com.zhangjiawei.web.UserInterceptor"></bean> </mvc:interceptor> 
+		</mvc:interceptors> -->
+
+	<!-- 上传下载配置 -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="utf-8"></property>
+		<property name="maxUploadSize" value="10485760000"></property>
+	</bean>
+
+	<!-- <bean class=""></bean> -->
+	<!-- 不拦截静态资源 -->
+	<mvc:default-servlet-handler />
+	<!-- mvc注解驱动 -->
+	<mvc:annotation-driven />
+
+
+</beans>

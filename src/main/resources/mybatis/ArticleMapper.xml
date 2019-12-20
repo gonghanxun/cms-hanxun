@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gonghanxun.cms.dao.ArticleMapper">
+	
+	<resultMap type="article" id="articleMapper">
+		<result property="channelId" column="channel_id"/>
+		<result property="categoryId" column="category_id"/>
+		<association property="channel" column="channel_id" javaType="com.gonghanxun.cms.entity.Channel" 
+		   select="findChannel"></association>
+		<association property="category" column="category_id" javaType="com.gonghanxun.cms.entity.Category" 
+		   select="findCatigory"></association>
+		<association property="user" column="user_id" javaType="com.gonghanxun.cms.entity.User"  select="com.gonghanxun.cms.dao.UserMapper.findUserById"/>
+	</resultMap>
+		
+	<select id="listByUser" resultMap="articleMapper">
+		SELECT id,title,channel_id,category_id , created,status ,picture
+		  FROM cms_article
+		  WHERE user_id = #{value} AND deleted=0
+		  ORDER BY id DESC  
+	</select>
+	
+	<!-- 获取热门文章 -->
+	<select id="hostList" resultMap="articleMapper">
+		SELECT id,title,channel_id,category_id ,user_id, created,picture
+		  FROM cms_article
+		  WHERE status = 1 AND deleted=0
+		         AND hot = 1 
+		  ORDER BY id DESC 
+    </select>
+    
+    
+    <select id="getArticles" resultMap="articleMapper">
+		SELECT id,title,channel_id,category_id ,user_id, created,picture
+		  FROM cms_article
+		  WHERE status = 1 AND deleted=0
+		  	AND channel_id=#{channelId}
+		  <if test="catId!=0">
+		  	AND category_id=#{catId}
+		  </if>   
+		  ORDER BY id DESC 
+    </select>
+    
+	<!-- 最新文章 -->
+	<select id="lastList" resultMap="articleMapper">
+		SELECT id,title,channel_id,category_id ,user_id, created,picture
+		  FROM cms_article
+		  WHERE status = 1 AND deleted=0
+		         AND hot = 1 
+		  ORDER BY id DESC 
+		  LIMIT #{value} 
+    </select>
+    
+	<select id="list" resultMap="articleMapper">
+		SELECT id,title,channel_id,category_id ,user_id, created,status,hot ,picture
+		  FROM cms_article
+		  WHERE status = #{value} AND deleted=0
+		  ORDER BY id DESC 
+	</select>
+	
+	
+	<!-- 获取频道 -->
+	<select id="findChannel" resultType="channel">
+		SELECT id,name FROM cms_channel WHERE id=#{value}
+	</select>
+	
+	<!-- 获取分类 -->
+	<select id="findCatigory" resultType="category">
+		SELECT id,name FROM cms_category WHERE id=#{value}
+	</select>
+	
+	<select id="findById" resultMap="articleMapper">
+		SELECT * FROM cms_article WHERE id=#{value} AND deleted=0
+	</select>
+	
+</mapper>

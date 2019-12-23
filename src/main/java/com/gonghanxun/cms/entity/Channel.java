@@ -2,7 +2,7 @@ package com.gonghanxun.cms.entity;
 
 /**
  * 
- * @author zhuzg
+ * @author hanxun
  *
  */
 public class Channel extends AbstractCategory {

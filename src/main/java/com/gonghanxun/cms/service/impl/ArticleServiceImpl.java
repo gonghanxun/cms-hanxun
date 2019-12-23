@@ -12,6 +12,7 @@ import com.gonghanxun.cms.entity.Article;
 import com.gonghanxun.cms.entity.Category;
 import com.gonghanxun.cms.entity.Channel;
 import com.gonghanxun.cms.entity.Comment;
+import com.gonghanxun.cms.entity.Complain;
 import com.gonghanxun.cms.entity.Slide;
 import com.gonghanxun.cms.service.ArticleService;
 import com.github.pagehelper.PageHelper;
@@ -163,6 +164,26 @@ public class ArticleServiceImpl implements ArticleService {
 		return new PageInfo<Comment>(articleMapper.getComments(articleId));
 		
 		
+	}
+
+	@Override
+	public int addComplian(Complain complain) {
+		// TODO Auto-generated method stub
+		
+		//添加投诉到数据库
+		int result = articleMapper.addCoplain(complain);
+		// 增加投诉的数量
+		if(result>0)
+			articleMapper.increaseComplainCnt(complain.getArticleId());
+		
+		return 0;
+	}
+
+	@Override
+	public PageInfo<Complain> getComplains(int articleId, int page) {
+		// TODO Auto-generated method stub
+		PageHelper.startPage(page, CmsContant.PAGE_SIZE);
+		return new PageInfo<Complain>(articleMapper.getComplains(articleId));
 	}
 
 	

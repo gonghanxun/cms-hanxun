@@ -1,9 +1,5 @@
 package com.gonghanxun.cms.common;
-/**
- * 
- * @author hanxun
- *
- */
+
 public class CmsError {
 	
 	/**

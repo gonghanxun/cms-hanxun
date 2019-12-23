@@ -4,7 +4,7 @@ import java.util.Date;
 
 /**
  * 评论
- * @author zhuzg
+ * @author hanxun
  *
  */
 public class Comment {

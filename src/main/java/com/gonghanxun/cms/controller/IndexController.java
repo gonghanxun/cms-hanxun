@@ -39,33 +39,33 @@ public class IndexController {
 		
 		Thread  t1 =  new Thread() {
 			public void run() {
-				// 获取所有的栏目
-				List<Channel> channels = articleService.getChannels();
-				request.setAttribute("channels", channels);
+		// 获取所有的栏目
+		List<Channel> channels = articleService.getChannels();
+		request.setAttribute("channels", channels);
 			};
 		};
 		
 		Thread  t2 =  new Thread() {
 			public void run() {
-				// 获取热门文章
-				PageInfo<Article> articlePage= articleService.hotList(page);
-				request.setAttribute("articlePage", articlePage);
+		// 获取热门文章
+		PageInfo<Article> articlePage= articleService.hotList(page);
+		request.setAttribute("articlePage", articlePage);
 			};
 		};
 		
 		Thread  t3 =  new Thread() {
 			public void run() {
-				// 获取最新文章
-				List<Article> lastArticles = articleService.lastList();
-				request.setAttribute("lastArticles", lastArticles);
+		// 获取最新文章
+		List<Article> lastArticles = articleService.lastList();
+		request.setAttribute("lastArticles", lastArticles);
 			};
 		};
 		
 		Thread  t4 =  new Thread() {
 			public void run() {
-				// 轮播图
-				List<Slide> slides = articleService.getSlides();
-				request.setAttribute("slides", slides);
+		// 轮播图
+		List<Slide> slides = articleService.getSlides();
+		request.setAttribute("slides", slides);
 		
 			};
 		};
@@ -96,39 +96,39 @@ public class IndexController {
 	 */
 	@RequestMapping("channel")
 	public String channel(HttpServletRequest request,
-		int channelId,
-		@RequestParam(defaultValue="0") int catId,
-		@RequestParam(defaultValue="1")  int page) throws InterruptedException {
+			int channelId,
+			@RequestParam(defaultValue="0") int catId,
+			@RequestParam(defaultValue="1")  int page) throws InterruptedException {
 		
 		Thread  t1 =  new Thread() {
 			public void run() {
-				// 获取所有的栏目
-				List<Channel> channels = articleService.getChannels();
-				request.setAttribute("channels", channels);
+		// 获取所有的栏目
+		List<Channel> channels = articleService.getChannels();
+		request.setAttribute("channels", channels);
 			};
 		};
 		
 		Thread  t2 =  new Thread() {
 			public void run() {
-				// 当前栏目下  当前分类下的文章
-				PageInfo<Article> articlePage= articleService.getArticles(channelId,catId, page);
-				request.setAttribute("articlePage", articlePage);
+		// 当前栏目下  当前分类下的文章
+		PageInfo<Article> articlePage= articleService.getArticles(channelId,catId, page);
+		request.setAttribute("articlePage", articlePage);
 			};
 		};
 		
 		Thread  t3 =  new Thread() {
 			public void run() {
-				// 获取最新文章
-				List<Article> lastArticles = articleService.lastList();
-				request.setAttribute("lastArticles", lastArticles);
+		// 获取最新文章
+		List<Article> lastArticles = articleService.lastList();
+		request.setAttribute("lastArticles", lastArticles);
 			};
 		};
 		
 		Thread  t4 =  new Thread() {
 			public void run() {
-				// 轮播图
-				List<Slide> slides = articleService.getSlides();
-				request.setAttribute("slides", slides);
+		// 轮播图
+		List<Slide> slides = articleService.getSlides();
+		request.setAttribute("slides", slides);
 		
 			};
 		};
@@ -136,10 +136,10 @@ public class IndexController {
 		// 获取当前栏目下的所有的分类 catId
 		Thread  t5 =  new Thread() {
 			public void run() {
-				// 
-				List<Category> categoris= articleService.getCategoriesByChannelId(channelId);
-				request.setAttribute("categoris", categoris);
-				System.err.println("categoris is " + categoris);
+		// 
+		List<Category> categoris= articleService.getCategoriesByChannelId(channelId);
+		request.setAttribute("categoris", categoris);
+		System.err.println("categoris is " + categoris);
 			};
 		};
 		

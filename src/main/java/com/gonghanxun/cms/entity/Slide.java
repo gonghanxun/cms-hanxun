@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 /**
  * 轮播图
- * @author zhuzg
+ * @author hanxun
  *
  */
 public class Slide implements Serializable {

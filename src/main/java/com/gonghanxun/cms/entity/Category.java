@@ -1,10 +1,9 @@
 package com.gonghanxun.cms.entity;
 
-import org.w3c.dom.views.AbstractView;
 
 /**
  * 文章的分类
- * @author zhuzg
+ * @author hanxun
  *
  */
 public class Category extends AbstractCategory {

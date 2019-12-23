@@ -1,17 +1,14 @@
 package com.gonghanxun.cms.controller;
 
-import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -41,13 +38,9 @@ import com.gonghanxun.cms.utils.StringUtils;
  */
 @Controller
 @RequestMapping("user")
-public class UserController {
+public class UserController  extends BaseController {
 	
-	@Value("${upload.path}")
-	String picRootPath;
 	
-	@Value("${pic.path}")
-	String picUrl;
 	
 	//public native void test();  .dll
 	@Autowired
@@ -62,8 +55,19 @@ public class UserController {
 	}
 	
 	@RequestMapping("logout")
-	public String home(HttpServletRequest request) {
+	public String home(HttpServletRequest request,HttpServletResponse response) {
 		request.getSession().removeAttribute(CmsContant.USER_KEY);
+		
+		
+		Cookie cookieUserName = new Cookie("username", "");
+		cookieUserName.setPath("/");
+		cookieUserName.setMaxAge(0);// 立即过期
+		response.addCookie(cookieUserName);
+		Cookie cookieUserPwd = new Cookie("userpwd", "");
+		cookieUserPwd.setPath("/");
+		cookieUserPwd.setMaxAge(0);// 立即过期
+		response.addCookie(cookieUserPwd);
+		
 		return "redirect:/";
 	}
 	
@@ -104,7 +108,7 @@ public class UserController {
 				
 		//加一个手动的校验
 		if(StringUtils.isNumber(user.getPassword())) {
-			result.rejectValue("password", "", "密码不能全是数字");
+			result.rejectValue("passowrd", "", "密码不能全是数字");
 			return "user/register";
 		}
 		
@@ -138,7 +142,8 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping(value="login",method=RequestMethod.POST)
-	public String login(HttpServletRequest request,User user) {
+	public String login(HttpServletRequest request,HttpServletResponse response, User user) {
+		String pwd =  new String(user.getPassword());
 		User loginUser = userService.login(user);
 		
 		//登录失败
@@ -148,11 +153,25 @@ public class UserController {
 		}
 		
 		// 登录成功，用户信息存放看到session当中
+		
 		request.getSession().setAttribute(CmsContant.USER_KEY, loginUser);
+		
+		//保存用户的用户名和密码
+		Cookie cookieUserName = new Cookie("username", user.getUsername());
+		cookieUserName.setPath("/");
+		cookieUserName.setMaxAge(10*24*3600);// 10天
+		response.addCookie(cookieUserName);
+		Cookie cookieUserPwd = new Cookie("userpwd", pwd);
+		cookieUserPwd.setPath("/");
+		cookieUserPwd.setMaxAge(10*24*3600);// 10天
+		response.addCookie(cookieUserPwd);
+		
+		
 		
 		// 进入管理界面
 		if(loginUser.getRole()==CmsContant.USER_ROLE_ADMIN)
 			 return "redirect:/admin/index";	
+		
 		
 		// 进入个人中心
 		return "redirect:/user/home";
@@ -322,43 +341,6 @@ public class UserController {
 		return updateREsult>0;
 		
 	}
-	
-	/**
-	 * 
-	 * @param file
-	 * @return
-	 * @throws IOException 
-	 * @throws IllegalStateException 
-	 */
-	private String processFile(MultipartFile file) throws IllegalStateException, IOException {
-		// 判断目标目录时间否存在
-		//picRootPath + ""
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-		String subPath = sdf.format(new Date());
-		//图片存放的路径
-		File path= new File(picRootPath+"/" + subPath);
-		//路径不存在则创建
-		if(!path.exists())
-			path.mkdirs();
-		
-		//计算新的文件名称
-		String suffixName = FileUtils.getSuffixName(file.getOriginalFilename());
-		
-		//随机生成文件名
-		String fileName = UUID.randomUUID().toString() + suffixName;
-		//文件另存
-		file.transferTo(new File(picRootPath+"/" + subPath + "/" + fileName));
-		return  subPath + "/" + fileName;
-		
-	}
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	

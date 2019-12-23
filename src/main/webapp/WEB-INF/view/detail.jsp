@@ -27,6 +27,7 @@
 			分类：${article.category.name}&nbsp;&nbsp;&nbsp;
 			发表时间：<fmt:formatDate value="${article.created}" pattern="yyyy-MM-dd"/> 
 			</h5>
+			<a href="/article/complain?articleId=${article.id}">投诉</a>
 			
 		</div>
 		<div style="margin-top:30px">

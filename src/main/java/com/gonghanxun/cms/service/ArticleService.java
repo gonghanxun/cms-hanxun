@@ -2,10 +2,13 @@ package com.gonghanxun.cms.service;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import com.gonghanxun.cms.entity.Article;
 import com.gonghanxun.cms.entity.Category;
 import com.gonghanxun.cms.entity.Channel;
 import com.gonghanxun.cms.entity.Comment;
+import com.gonghanxun.cms.entity.Complain;
 import com.gonghanxun.cms.entity.Slide;
 import com.github.pagehelper.PageInfo;
 
@@ -128,6 +131,16 @@ public interface ArticleService {
 	 * @return
 	 */
 	PageInfo<Comment> getComments(int articleId, int page);
+
+	int addComplian( Complain complain);
+
+	/**
+	 * 获取投书
+	 * @param articleId
+	 * @param page
+	 * @return
+	 */
+	PageInfo<Complain> getComplains(int articleId, int page);
 	
 	
 

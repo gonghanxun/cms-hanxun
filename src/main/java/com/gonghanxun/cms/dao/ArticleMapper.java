@@ -12,6 +12,7 @@ import com.gonghanxun.cms.entity.Article;
 import com.gonghanxun.cms.entity.Category;
 import com.gonghanxun.cms.entity.Channel;
 import com.gonghanxun.cms.entity.Comment;
+import com.gonghanxun.cms.entity.Complain;
 
 public interface ArticleMapper {
 
@@ -135,6 +136,34 @@ public interface ArticleMapper {
 			+ " LEFT JOIN cms_user as u ON u.id=c.userId "
 			+ " WHERE articleId=#{value} ORDER BY c.created DESC")
 	List<Comment> getComments(int articleId);
+
+	/**
+	 * 
+	 * @param complain
+	 * @return
+	 */
+	@Insert("INSERT INTO cms_complain(article_id,user_id,complain_type,"
+			+ "compain_option,src_url,picture,content,email,mobile,created)"
+			+ "   VALUES(#{articleId},#{userId},"
+			+ "#{complainType},#{compainOption},#{srcUrl},#{picture},#{content},#{email},#{mobile},now())")
+	int addCoplain(Complain complain);
+
+	/**
+	 * 
+	 * @param articleId
+	 */
+	@Update("UPDATE cms_article SET complainCnt=complainCnt+1,status=if(complainCnt>10,2,status)  "
+			+ " WHERE id=#{value}")
+	void increaseComplainCnt(Integer articleId);
+
+	/**
+	 * 
+	 * @param articleId
+	 * @return
+	 */
+	List<Complain> getComplains(int articleId);
+	
+	
 	
 	
 	

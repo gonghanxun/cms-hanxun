@@ -1,10 +1,9 @@
 package com.gonghanxun.cms.entity;
 
 import java.io.Serializable;
-
 /**
  * 
- * @author zhuzg
+ * @author hanxun
  *
  */
 public abstract class  AbstractCategory  implements Serializable {

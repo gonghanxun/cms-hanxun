@@ -17,6 +17,12 @@ public class DemoController {
 	public String toggle() {
 		return "demo/toggle";
 	}
+	
+	@RequestMapping("checkbox")
+	public String checkbox() {
+		
+		return "demo/checkbox";
+	}
 
 	
 	//处理登录  , produces = "application/json; charset=utf-8"

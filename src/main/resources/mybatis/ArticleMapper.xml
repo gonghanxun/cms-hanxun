@@ -51,11 +51,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		  ORDER BY id DESC 
 		  LIMIT #{value} 
     </select>
-    
+    <!-- status = #{value} -->
 	<select id="list" resultMap="articleMapper">
-		SELECT id,title,channel_id,category_id ,user_id, created,status,hot ,picture
+		SELECT id,title,channel_id,category_id ,user_id, created,status,hot ,picture,complainCnt
 		  FROM cms_article
-		  WHERE status = #{value} AND deleted=0
+		  WHERE   deleted=0
 		  ORDER BY id DESC 
 	</select>
 	
@@ -72,6 +72,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="findById" resultMap="articleMapper">
 		SELECT * FROM cms_article WHERE id=#{value} AND deleted=0
+	</select>
+	
+	<resultMap type="complain" id="ComplainMapper">
+		<result column="article_id" property="articleId"/>
+		<result column="complain_type" property="complainType"/>
+		<result column="src_url" property="srcUrl"/>
+		<result column="compain_option" property="compainOption"/>
+		<result column="user_id" property="userId"/>
+		<association column="user_id" property="user" 
+			javaType="com.gonghanxun.cms.entity.User"
+			select="com.gonghanxun.cms.dao.UserMapper.findUserById"
+		/>
+	</resultMap>
+	
+	<select id="getComplains" resultMap="ComplainMapper">
+		SELECT * FROM cms_complain where article_id=#{value}
 	</select>
 	
 </mapper>

@@ -4,7 +4,7 @@ import java.util.Date;
 
 /**
  * 
- * @author zhuzg
+ * @author hanxun
  *
  */
 public class Article {
@@ -29,6 +29,16 @@ public class Article {
 	private Category  category     ; //分类
 	private User user ;
 	
+	private int complainCnt;// 投诉的数量
+	
+	public int getComplainCnt() {
+		return complainCnt;
+	}
+
+	public void setComplainCnt(int complainCnt) {
+		this.complainCnt = complainCnt;
+	}
+
 	public Integer getId() {
 		return id;
 	}
@@ -144,7 +154,7 @@ public class Article {
 				+ ", channelId=" + channelId + ", categoryId=" + categoryId + ", userId=" + userId + ", hits=" + hits
 				+ ", hot=" + hot + ", status=" + status + ", deleted=" + deleted + ", created=" + created + ", updated="
 				+ updated + ", commentCnt=" + commentCnt + ", articleType=" + articleType + ", channel=" + channel
-				+ ", category=" + category + ", user=" + user + "]";
+				+ ", category=" + category + ", user=" + user + ", complainCnt=" + complainCnt + "]";
 	}
 	@Override
 	public int hashCode() {

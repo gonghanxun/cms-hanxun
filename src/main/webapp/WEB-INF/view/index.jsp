@@ -53,10 +53,6 @@
 </style>
 
 </head>
-
-<body style="background:url(/pic/psb.jpg)"> 
-	<!-- <audio autoplay="autoplay"   id="myaudio"  loop="loop" preload="auto"  
-      src="/resource/audio/jmszl.mp3"/> -->
 <body>
  <!-- 导航条 -->
  
@@ -82,7 +78,7 @@
 		<div class="col-md-6">
 			<!-- 轮播图 -->
 			<div>
-				 <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
+				<div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
 					  <ol class="carousel-indicators">
 					  	<c:forEach items="${slides}" var="slide" varStatus="index">
 					    	<li data-target="#carouselExampleCaptions" data-slide-to="${index.index}" class='${index.index==0?"active":""}'></li>
@@ -131,7 +127,7 @@
 						</div>
 					</div>
 				</c:forEach>
-			</div> 
+			</div>
 			
 			<!-- 分页开始 -->
 			<div class="row justify-content-center" style="margin-top:20px">

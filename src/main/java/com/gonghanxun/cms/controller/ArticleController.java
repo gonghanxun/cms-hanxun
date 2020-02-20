@@ -1,14 +1,20 @@
 package com.gonghanxun.cms.controller;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,12 +24,15 @@ import org.springframework.web.multipart.MultipartFile;
 import com.gonghanxun.cms.common.CmsContant;
 import com.gonghanxun.cms.common.CmsError;
 import com.gonghanxun.cms.common.CmsMessage;
+import com.gonghanxun.cms.dao.ArticleRep;
 import com.gonghanxun.cms.entity.Article;
+import com.gonghanxun.cms.entity.Channel;
 import com.gonghanxun.cms.entity.Comment;
 import com.gonghanxun.cms.entity.Complain;
 import com.gonghanxun.cms.entity.User;
 import com.gonghanxun.cms.service.ArticleService;
 import com.github.pagehelper.PageInfo;
+import com.gonghanxun.cms.utils.HLUtils;
 import com.gonghanxun.cms.utils.StringUtils;
 
 @Controller
@@ -38,6 +47,18 @@ public class ArticleController extends BaseController {
 	 * @param id
 	 * @return
 	 */
+	@Autowired
+	RedisTemplate redisTemplate;
+	
+	@Autowired
+	ElasticsearchTemplate elasticsearchTemplate;
+	
+	//注入es仓库
+	@Autowired
+	ArticleRep articleRep;
+	
+	
+	
 	@RequestMapping("getDetail")
 	@ResponseBody
 	public CmsMessage getDetail(int id) {

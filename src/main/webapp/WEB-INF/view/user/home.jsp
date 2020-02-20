@@ -87,7 +87,10 @@
 				    <a id="postLink" class="nav-link" href="#" onclick="showWork($(this),'/user/postArticle')">发表文章</a>
 				  </li>
 				  <li class="nav-item">
-				    <a class="nav-link" href="#" onclick="showWork($(this),'/user/comments')" >我的评论</a>
+				    <a class="nav-link" href="#" onclick="showWork($(this),'/user/comments')" >收藏夹</a>
+				  </li>
+				  <li class="nav-item ">
+				    <a  class="nav-link" href="#" onclick="domain()" >我的评论</a>
 				  </li>
 				  <li class="nav-item">
 				    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">个人设置</a>
@@ -127,6 +130,10 @@
 		$("#workcontent").load(url);
 		
 	}
+	function domain(){
+		location="domainlist.jsp"
+	}
+	
 </script>
 
 

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.gonghanxun.cms.dao.DomainMapper">
+  	<select id="list" resultType="com.gonghanxun.cms.entity.Domain">
+  		select * from cms_domain
+  	</select>
+  </mapper>

@@ -58,7 +58,9 @@ public class UserController  extends BaseController {
 	public String home(HttpServletRequest request,HttpServletResponse response) {
 		request.getSession().removeAttribute(CmsContant.USER_KEY);
 		
-		
+		/*
+		 * 点击退出时清除Cookie，再进入登录页面则判断没有记住登录，进入登录页面
+		 */
 		Cookie cookieUserName = new Cookie("username", "");
 		cookieUserName.setPath("/");
 		cookieUserName.setMaxAge(0);// 立即过期
@@ -157,6 +159,9 @@ public class UserController  extends BaseController {
 		request.getSession().setAttribute(CmsContant.USER_KEY, loginUser);
 		
 		//保存用户的用户名和密码
+		/*
+		 * 关闭浏览器，再次打开测试登录，判断Cookie是否有值，如果有则直接登录。否则跳转到登录页面。
+		 */
 		Cookie cookieUserName = new Cookie("username", user.getUsername());
 		cookieUserName.setPath("/");
 		cookieUserName.setMaxAge(10*24*3600);// 10天
@@ -167,7 +172,6 @@ public class UserController  extends BaseController {
 		response.addCookie(cookieUserPwd);
 		
 		
-		
 		// 进入管理界面
 		if(loginUser.getRole()==CmsContant.USER_ROLE_ADMIN)
 			 return "redirect:/admin/index";	
@@ -176,12 +180,31 @@ public class UserController  extends BaseController {
 		// 进入个人中心
 		return "redirect:/user/home";
 		
-		
-		
-		
-		
 	}
 	
+	
+	/**
+	 * 
+	 * @param response
+	 * @param user
+	 * @return
+	 */
+/*	@RequestMapping(value="login",method=RequestMethod.POST)
+	public String Cookie(HttpServletResponse response,User user) {
+		String pwd =  new String(user.getPassword());
+		//保存用户的用户名和密码
+		
+		Cookie cookieUserName = new Cookie("username", user.getUsername());
+		cookieUserName.setPath("/");
+		cookieUserName.setMaxAge(10*24*3600);// 10天
+		response.addCookie(cookieUserName);
+		Cookie cookieUserPwd = new Cookie("userpwd", pwd);
+		cookieUserPwd.setPath("/");
+		cookieUserPwd.setMaxAge(10*24*3600);// 10天
+		response.addCookie(cookieUserPwd);
+		// 进入个人中心
+		return "redirect:/user/home";
+	}*/
 	
 	
 	/**

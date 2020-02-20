@@ -56,6 +56,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT id,title,channel_id,category_id ,user_id, created,status,hot ,picture,complainCnt
 		  FROM cms_article
 		  WHERE   deleted=0
+		  <if test="value!=-1">
+		  	AND status=#{value}
+		  </if>
 		  ORDER BY id DESC 
 	</select>
 	

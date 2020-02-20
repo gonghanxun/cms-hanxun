@@ -162,6 +162,8 @@ public interface ArticleMapper {
 	 * @return
 	 */
 	List<Complain> getComplains(int articleId);
+	@Select("select * from cms_article where status= #{i}")
+	List<Article> findAllArticlesWithStatus(@Param("i")int i);
 	
 	
 	

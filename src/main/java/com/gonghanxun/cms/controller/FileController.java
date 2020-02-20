@@ -1,4 +1,4 @@
-package com.gonghanxun.cms.controller;
+  package com.gonghanxun.cms.controller;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -32,7 +32,7 @@ import com.gonghanxun.cms.common.FileResult;
 /**
  * 
  * @author hanxun
- *
+ * 
  */
 @Controller
 @RequestMapping("file")

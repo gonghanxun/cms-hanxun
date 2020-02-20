@@ -34,6 +34,7 @@
 						    <input type="password" name="password" class="form-control"/>
 						  </div>
 							  <button type="submit" class="btn btn-primary">登录</button>
+							  <input type="checkbox" name="">记录密码
 						        <a href="register"> <font color="#FF0033"> 尚无账号，点击这里直接去注册</font> </a>
 						</form>
 		 		</div>

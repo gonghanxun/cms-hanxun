@@ -4,10 +4,10 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!-- <div class="container-fluid"> -->
 			<select>
-				<option value="1">待审核</option>
-				<option value="2">审核通过</option>
-				<option value="3">待审核</option>
-				<option value="4">待审核</option>
+				<option value="-1">全部</option>
+				<option value="1">审核通过</option>
+				<option value="2">审核拒绝</option>
+				<option value="0">待审核</option>
 			</select>
 	<table class="table">
 		<!-- articlePage -->
@@ -49,7 +49,7 @@
         			<td width="200px">
         				<input type="button" value="删除"  class="btn btn-danger" onclick="del(${article.id})">
         				<input type="button" value="审核"  class="btn btn-warning" onclick="check(${article.id})" >
-        				<input type="button" value="管理投诉"  class="btn btn-warning" onclick="complainList(${article.id})" >
+        				<%-- <input type="button" value="管理投诉"  class="btn btn-warning" onclick="complainList(${article.id})" > --%>
         			</td>
         		</tr>
         	</c:forEach>
@@ -134,10 +134,17 @@
 		refreshPage();
 	})
 	
+	$('#complainModal').on('hidden.bs.modal', function (e) {
+		  // do something...
+		 
+		refreshPage();
+	})
+	
 	/**
 	* 查看文章的投诉
 	*/
 	function complainList(id){
+		global_article_id=id;
 		$("#complainModal").modal('show')
 		$("#complainListDiv").load("/article/complains?articleId="+id);
 		
@@ -196,6 +203,7 @@
 				alert('操作成功')
 				//隐藏当前的模态框
 				$('#articleContent').modal('hide')
+				$('#complainModal').modal('hide')
 				//刷新当前的页面
 				//refreshPage();
 				return;	

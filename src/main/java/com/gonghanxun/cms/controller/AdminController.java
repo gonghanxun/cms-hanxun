@@ -103,7 +103,7 @@ public class AdminController {
 	
 	
 	@RequestMapping("article")
-	public String article(HttpServletRequest request, @RequestParam(defaultValue= "0") int status ,
+	public String article(HttpServletRequest request, @RequestParam(defaultValue= "-1") int status ,
 			@RequestParam(defaultValue= "1") int page) {
 		PageInfo<Article> articlePage =  articleService.list(status ,page);
 		request.setAttribute("status", status);
